@@ -69,7 +69,7 @@ class SoundCloudClient(object):
         super(SoundCloudClient, self).__init__()
         token = config['auth_token']
         self.explore_songs = config.get('explore_songs', 10)
-        self.stream_songs = config.get('stream_songs', 10)
+        self.stream_songs = config.get('stream_songs', 50)
         self.http_client = requests.Session()
         self.http_client.headers.update({'Authorization': 'OAuth %s' % token})
 
