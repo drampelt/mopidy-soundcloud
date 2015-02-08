@@ -69,6 +69,7 @@ class SoundCloudClient(object):
         super(SoundCloudClient, self).__init__()
         token = config['auth_token']
         self.explore_songs = config.get('explore_songs', 10)
+        self.stream_songs = config.get('stream_songs', 10)
         self.http_client = requests.Session()
         self.http_client.headers.update({'Authorization': 'OAuth %s' % token})
 
@@ -92,7 +93,7 @@ class SoundCloudClient(object):
         # https://api.soundcloud.com/e1/me/stream.json?offset=0
         # returns five elements per request
         tracks = []
-        for sid in xrange(0, 2):
+        for sid in xrange(0, self.stream_songs / 5):
             stream = self._get('e1/me/stream.json?offset=%s' % sid * 5)
             for data in stream.get('collection'):
                 kind = data.get('type')
